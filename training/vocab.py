@@ -4,6 +4,8 @@ Constructing and loading dictionaries
 import pickle as pkl
 import numpy
 from collections import OrderedDict
+import argparse
+import time
 
 def build_dictionary(text):
     """
@@ -44,10 +46,24 @@ def save_dictionary(worddict, wordcount, loc):
         pkl.dump(wordcount, f)
 
 
+def readFile(filename):
+    sentences = []
+    with open(filename) as f:
+        for line in f:
+            if line == '':
+                continue
+            
+            if '.' in line:
+                sentences.extend(line.split('.'))
+            else:
+                sentences.append(line)
+    return sentences
+
+
 def cutSentences(lsentences):
     toAdd = []
     for i, fsent in enumerate(lsentences):
-        if fsent = '':
+        if fsent == '':
             lsentences.pop(i)
         if '. ' in fsent:
             toAdd.extend(fsent.split('. '))
@@ -55,6 +71,47 @@ def cutSentences(lsentences):
     lsentences.extend(toAdd)
 
 if __name__ == "__main__":
-    pass
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--sentences_file', help="File containing sentences",
+                        default="/data/wiki+leboncoin_pre.txt")
+    parser.add_argument('-d','--dictionary_name', help="Path to save dictionary",
+                        default='dictionary.pkl')
+    args = parser.parse_args()
+    
+    print('Loading sentences file')
+    t0 = time.time()
+    sentences = readFile(args.sentences_file)
+    print('File read in', time.time() - t0, ' sec')
+
+    print("Creating dictionary")
+    dic, count = build_dictionary(sentences)
+    print("Saving dictionary")
+    save_dictionary(dic, count, args.dictionary_name)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
