@@ -4,7 +4,7 @@ Main trainer function
 import theano
 import theano.tensor as tensor
 
-import cPickle as pkl
+import pickle as pkl
 import numpy
 import copy
 
@@ -37,8 +37,8 @@ def trainer(X,
             maxlen_w=30,
             optimizer='adam',
             batch_size = 64,
-            saveto='/u/rkiros/research/semhash/models/toy.npz',
-            dictionary='/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl',
+            saveto='/data/embeddingModel.npz',
+            dictionary='/data/dictionary.pkl',
             saveFreq=1000,
             reload_=False):
 

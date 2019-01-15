@@ -44,3 +44,17 @@ def save_dictionary(worddict, wordcount, loc):
         pkl.dump(wordcount, f)
 
 
+def cutSentences(lsentences):
+    toAdd = []
+    for i, fsent in enumerate(lsentences):
+        if fsent = '':
+            lsentences.pop(i)
+        if '. ' in fsent:
+            toAdd.extend(fsent.split('. '))
+            lsentences.pop(i)
+    lsentences.extend(toAdd)
+
+if __name__ == "__main__":
+    pass
+
+
