@@ -29,12 +29,13 @@ def build_dictionary(text):
 
     return worddict, wordcount
 
-def load_dictionary(loc='/ais/gobi3/u/rkiros/bookgen/book_dictionary_large.pkl'):
+def load_dictionary(loc='dictionary.pkl'):
     """
     Load a dictionary
     """
     with open(loc, 'rb') as f:
         worddict = pkl.load(f)
+        wordcount = pkl.load(f)
     return worddict
 
 def save_dictionary(worddict, wordcount, loc):
@@ -69,6 +70,15 @@ def cutSentences(lsentences):
             toAdd.extend(fsent.split('. '))
             lsentences.pop(i)
     lsentences.extend(toAdd)
+    
+def removeWords(worddict, wordcount, count=30):
+    klist = list(worddict.keys())
+    for key in klist:
+        if wordcount[key] < count:
+            worddict.pop(key, None)
+    return worddict
+    
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -86,6 +96,7 @@ if __name__ == "__main__":
     print("Creating dictionary")
     dic, count = build_dictionary(sentences)
     print("Saving dictionary")
+    removeWords(dic, count)
     save_dictionary(dic, count, args.dictionary_name)
 
 
